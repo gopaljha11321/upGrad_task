@@ -39,6 +39,7 @@ const App = () => {
       }  
       setImages(temp); 
     });
+
   }, []);
   const find = (a) => {
     return a.title.toLowerCase().search(val.toLowerCase()) > -1;
