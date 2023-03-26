@@ -4,8 +4,8 @@ const Card = (props) => {
     <>
       <div className="card">
         <img
-          src={props.movie.Images[0]}
-          width="200px"
+          src={props.Images?props.Images[0]:""}
+          width="100%"
           height="200px"
         ></img>
         <div
@@ -20,10 +20,10 @@ const Card = (props) => {
             height:"100px"
           }}
         >
-          <div>{props.movie.Title}</div>
-          <div>{props.movie.Year}</div>
+          <div>{props.movie.title}</div>
+          <div>{props.movie.year}</div>
           <div>{props.movie.imdbRating}</div>
-          <div>{props.movie.Runtime}</div>
+          <div>{props.movie.runtime}</div>
         </div>
       </div>
     </>

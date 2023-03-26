@@ -1,30 +1,52 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Slider from "../component/Slider";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Info = (props) => {
+  const history = useNavigate();
   const { id } = useParams();
   const [index, setindex] = useState(id);
   const [data, setData] = useState({});
+  const [Images, setImages] = useState([]);
   useEffect(() => {
     axios
-      .get(
-        "https://gist.githubusercontent.com/saniyusuf/406b843afdfb9c6a86e25753fe2761f4/raw/523c324c7fcc36efab8224f9ebb7556c09b69a14/Film.JSON"
-      )
+      .get("http://localhost:3001/movie")
       .then((res) => {
-        setData(res.data[id]?res.data[id]:[]);
+        setData(res.data[id] ? res.data[id] : {});
+        if (!res.data[id]) {
+          history("/");
+        }
+      })
+      .catch(() => {
+        console.log("server not found!!");
       });
+    axios.get(`http://localhost:3001/get`).then((res) => {
+      let temp = [];
+      let data = res.data;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].user_id == Number(id) + 1) {
+          temp.push(data[i].path);
+        }
+      }
+      setImages(temp);
+    });
   }, []);
   return (
     <>
-      <div className="container" style={{textAlign:"center"}}>
-        <h1>Info Page</h1>
-        <div>Title: {data.Title}</div>
-        <div>Type: {data.Type}</div>
-        <div>Runtime: {data?.Runtime}</div>
-        <div>Writer: {data.Writer}</div>
-        <div>Actors: {data.Actors}</div>
-        <div>Director: {data.Director}</div>
+      <Slider images={Images} />
+      <div className="container" style={{ textAlign: "center" }}>
+        <br></br>
+        <h1 style={{ textAlign: "center", fontFamily: "Arial" }}>
+          {data.title}
+        </h1>
+        <div>Title: {data.title}</div>
+        <div>Type: {data.type}</div>
+        <div>Runtime: {data.runtime}</div>
+        <div>Writer: {data.writer}</div>
+        <div>Actors: {data.actors}</div>
+        <div>Director: {data.director}</div>
       </div>
     </>
   );
