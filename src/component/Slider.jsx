@@ -5,7 +5,7 @@ const Slider = (props) => {
         id="carouselExampleIndicators"
         className="carousel slide"
         data-ride="carousel"
-        style={{width:"100%",height:"750px",textAlign:"right"}}
+        style={{width:"100%",height:"100%",textAlign:"right"}}
       >
         <ol className="carousel-indicators">
           {props?.images
@@ -20,10 +20,10 @@ const Slider = (props) => {
               })
             : ""}
         </ol>
-        <div className="carousel-inner"  style={{width:"100%",height:"100%"}}>
+        <div className="carousel-inner"  style={{width:"100%",height:"100%",boxShadow:"1px  1px 1px 2px white"}}>
           <div className="carousel-item active">
             <img
-            style={{width:"100%",height:"750px"}}
+            style={{width:"100%",height:"70vh"}}
               className="d-block w-100"
               src={props?.images?props?.images[0] : ""}
               alt="First slide"
@@ -33,10 +33,10 @@ const Slider = (props) => {
             if(index+1!=props.images.length)
             {
                 return(
-                    <div className="carousel-item"  style={{width:"100%",height:"100%"}}> 
+                    <div className="carousel-item" key={index}   > 
                        <img
-                        style={{width:"100%",height:"100%%"}}
-                         className="d-block w-100 "
+                        style={{width:"100%",height:"70vh"}}
+                         className="d-block  w-100"
                          src={props?.images ? props?.images[index+1] : ""}
                          alt="Second slide"
                        />
