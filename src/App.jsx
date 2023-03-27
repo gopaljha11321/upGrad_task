@@ -9,12 +9,14 @@ const App = () => {
   const [search, setSearch] = useState([]);
   const [status, setStatus] = useState(true);
   const [Images, setImages] = useState({});
+  const[server, serverStatus]=useState(false);
   useEffect(() => {
     axios
       .get("http://localhost:3001/movie")
       .then((res) => {
         setMovie(res.data);
         setSearch(res.data);
+        serverStatus(true);
       })
       .catch(() => {
         console.log("Server not found!!");
@@ -57,8 +59,10 @@ const App = () => {
   };
   return (
     <>
+    {
+      server?
       <div className="container1">
-        <h1 style={{ textAlign: "center", fontFamily: "Arial" }}>Movies</h1>
+        <h1 style={{ textAlign: "center", fontFamily: "Arial", fontWeight:"700" }}>Movies</h1>
         <Input
           type="text"
           name=""
@@ -88,7 +92,11 @@ const App = () => {
             );
           })}
         </div>
+      </div>:<>
+      <div className="container1" style={{margin:"auto", "height":"100vh",textAlign:"center",paddingTop:"25vh"}}><img src="serverFail.gif" style={{"width":"auto","height":"auto"}}/>
       </div>
+      
+      </>}
     </>
   );
 };

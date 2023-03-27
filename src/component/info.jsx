@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Slider from "../component/Slider";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import serverImg from "./serverFail.gif";
 
 const Info = (props) => {
   const history = useNavigate();
@@ -10,6 +11,7 @@ const Info = (props) => {
   const [index, setindex] = useState(id);
   const [data, setData] = useState({});
   const [Images, setImages] = useState([]);
+  const[server, serverStatus]=useState(false);
   useEffect(() => {
     axios
       .get("http://localhost:3001/movie")
@@ -17,7 +19,9 @@ const Info = (props) => {
         setData(res.data[id] ? res.data[id] : {});
         if (!res.data[id]) {
           history("/");
+          
         }
+        serverStatus(true);
       })
       .catch(() => {
         console.log("server not found!!");
@@ -32,9 +36,13 @@ const Info = (props) => {
       }
       setImages(temp);
     });
+   
   }, []);
   return (
     <>
+    {
+      server?
+      <>
       <Slider images={Images} />
       <div className="container" style={{ textAlign: "center" }}>
         <br></br>
@@ -48,6 +56,11 @@ const Info = (props) => {
         <div>Actors: {data.actors}</div>
         <div>Director: {data.director}</div>
       </div>
+      </>
+      :<>
+      <div className="container1" style={{margin:"auto", "height":"100vh",textAlign:"center",paddingTop:"25vh"}}><img src={serverImg} style={{"width":"auto","height":"auto"}}></img>
+      </div>
+      </>}
     </>
   );
 };
