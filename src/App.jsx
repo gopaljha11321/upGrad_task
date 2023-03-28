@@ -6,9 +6,8 @@ import { Input } from "@mui/material";
 import Breadcrumb from "./component/Breadcrumb";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import NativeSelect from "@mui/material/NativeSelect";
+import "./App.css"
 let val = "";
 const App = () => {
   const [movie, setMovie] = useState([]);
@@ -17,9 +16,10 @@ const App = () => {
   const [Images, setImages] = useState({});
   const [server, serverStatus] = useState(false);
   const [filetrType,setFilterType]=useState("title");
+  const [serve,setServe]=useState("http://10.100.151.132:3001")
   useEffect(() => {
     axios
-      .get("http://localhost:3001/movie")
+      .get(serve+"/movie")
       .then((res) => {
         setMovie(res.data);
         setSearch(res.data);
@@ -27,8 +27,9 @@ const App = () => {
       })
       .catch(() => {
         console.log("Server not found!!");
+        setServe("http://localhost:3001");
       });
-    axios.get(`http://localhost:3001/get`).then((res) => {
+    axios.get(`${serve}/get`).then((res) => {
       let temp = {};
       let data = res.data;
       for (let i = 0; i < data.length; i++) {
@@ -71,7 +72,7 @@ const App = () => {
       {server ? (
         <>
           <Breadcrumb />
-          <div className="container1">
+          <div className="container10">
             <h1
               style={{
                 textAlign: "center",
@@ -117,7 +118,7 @@ const App = () => {
               </FormControl>
             </div>
 
-            <div style={{ width: "100%", height: "auto", paddingLeft: "60px" }}>
+            <div className="box">
               {search.map((item, index) => {
                 return (
                   <>

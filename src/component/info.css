@@ -1,0 +1,29 @@
+.container1
+{
+    /* border:2px red solid; */
+    display:flex;
+    background:black;
+    color:white;
+    width:100%;
+}
+.slider
+{
+    width:50%;
+    margin-top:20px;
+    /* border:2px blue solid; */
+    margin-left:20px;
+    height:500px;
+}
+@media (max-width:700px) {
+    .slider{
+        width:350px;
+        margin-top:20px;
+        /* border:2px blue solid; */
+        margin-left:20px;
+        height:300px;
+    }
+
+    .container1{
+    display: inline;
+    }
+}
