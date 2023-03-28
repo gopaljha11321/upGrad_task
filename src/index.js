@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import User from "./pages/User.jsx"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import{lazy,Suspense} from "react"
-const App=lazy(()=>import("./App"))
+const App=lazy(()=>import("./pages/App"))
 const Info=lazy(()=>import("../src/component/info"))
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,6 +14,8 @@ root.render(
         <Route path="/home" element={<App />} key={1} />
         <Route path="/home/info/:id" element={<Info />} key={2} />
         <Route path="/*" element={<Navigate to="/home" />} />
+        <Route path="/user" element={<User/>} />
+
       </Routes>
       </Suspense>
     </BrowserRouter>

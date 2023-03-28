@@ -1,13 +1,14 @@
 import axios from "axios";
-import Card from "./component/card";
+import Card from "../component/card";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Input } from "@mui/material";
-import Breadcrumb from "./component/Breadcrumb";
+import Breadcrumb from "../component/Breadcrumb";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import NativeSelect from "@mui/material/NativeSelect";
-import "./App.css"
+import { useNavigate } from "react-router-dom";
+import "./App.css";
 let val = "";
 const App = () => {
   const [movie, setMovie] = useState([]);
@@ -15,11 +16,18 @@ const App = () => {
   const [status, setStatus] = useState(true);
   const [Images, setImages] = useState({});
   const [server, serverStatus] = useState(false);
-  const [filetrType,setFilterType]=useState("title");
-  const [serve,setServe]=useState("http://10.100.151.132:3001")
+  const [filetrType, setFilterType] = useState("title");
+  const [serve, setServe] = useState(
+    "http://localhost:3001" || "http://10.100.151.132:3001"
+  );
+  let history = useNavigate();
   useEffect(() => {
+    if (!localStorage.getItem("id")) {
+      console.log(localStorage.getItem("auth"));
+      history("/user");
+    }
     axios
-      .get(serve+"/movie")
+      .get(serve + "/movie")
       .then((res) => {
         setMovie(res.data);
         setSearch(res.data);
@@ -47,12 +55,12 @@ const App = () => {
     });
   }, []);
   const find = (a) => {
-    let dic={
-      "title":a.title,
-      "year":a.year,
-      "rating":a.imdbRating,
-      "time":a.runtime
-    }
+    let dic = {
+      title: a.title,
+      year: a.year,
+      rating: a.imdbRating,
+      time: a.runtime,
+    };
 
     return dic[filetrType].toLowerCase().search(val.toLowerCase()) > -1;
   };
@@ -97,18 +105,16 @@ const App = () => {
                 <InputLabel variant="standard" htmlFor="uncontrolled-native">
                   Filter
                 </InputLabel>
-                
+
                 <NativeSelect
-                onChange={(evt)=>
-                {
-                  setFilterType(evt.target.value);
-                }}
+                  onChange={(evt) => {
+                    setFilterType(evt.target.value);
+                  }}
                   defaultValue={"Title"}
                   inputProps={{
                     name: "age",
                     id: "uncontrolled-native",
-                  }
-                }
+                  }}
                 >
                   <option value={"title"}>Title</option>
                   <option value={"year"}>Year</option>
