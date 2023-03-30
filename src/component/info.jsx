@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Slider from "../component/Slider";
+import Slider from "./Slider";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import serverImg from "./serverFail.gif";
@@ -8,7 +8,7 @@ import Breadcrumb from "./Breadcrumb";
 import "./info.css"
 
 const Info = (props) => {
-  const serve="http://localhost:3001"||"http://10.100.151.132:3001";
+  const serve="http://10.100.150.196:3001"||"http://10.100.151.132:3001";
   const history = useNavigate();
   const { id } = useParams();
   const [index, setindex] = useState(id);

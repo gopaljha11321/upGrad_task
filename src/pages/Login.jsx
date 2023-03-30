@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 import { useNavigation } from "react";
 import axios from "axios";
-import "./user.css";
+import "./login.css";
 const initialValues = {
   login_email: "",
   login_password: "",
@@ -64,7 +64,7 @@ const User = () => {
   const [loading, setLoading] = useState(true);
   const [registerPage, setregisterPage] = useState(false);
   const [serve, setServe] = useState(
-    "http://localhost:3001" || "http://10.100.151.132:3001"
+    "http://10.100.150.196:3001" || "http://10.100.151.132:3001"
   );
 
   useEffect(() => {
@@ -107,7 +107,12 @@ const User = () => {
       setError("Please Enter Email");
     } else if (data.password === "") {
       setError("Please Enter Password");
-    } else {
+    } else if (
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email)
+    ) {
+        setError("Please Enter valid Email")
+      } 
+    else {
       if (values.save === false) {
         localStorage.setItem("save", "disable");
       } else {
@@ -141,7 +146,14 @@ const User = () => {
       setError("Please Enter Email");
     } else if (data.password === "") {
       setError("Please Enter Password");
-    } else if (values.condition) {
+    }
+    else if (
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email)
+    )
+    {
+      setError("Please Enter valid email");
+    }
+     else if (values.condition) {
       axios.post(`${serve}/register`, data).then((res) => {
         if (res.data.res_code != 1) {
           setError(res.data.err);

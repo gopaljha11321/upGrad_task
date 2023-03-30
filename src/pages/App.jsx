@@ -1,5 +1,5 @@
 import axios from "axios";
-import Card from "../component/card";
+import Card from "../component/Card";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Input } from "@mui/material";
@@ -8,9 +8,11 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import NativeSelect from "@mui/material/NativeSelect";
 import { useNavigate } from "react-router-dom";
-import "./App.css";
-let val = "";
+import {Button} from "@mui/material/"
+import "./app.css";
+
 const App = () => {
+  let val = "";
   const [movie, setMovie] = useState([]);
   const [search, setSearch] = useState([]);
   const [status, setStatus] = useState(true);
@@ -18,7 +20,7 @@ const App = () => {
   const [server, serverStatus] = useState(false);
   const [filetrType, setFilterType] = useState("title");
   const [serve, setServe] = useState(
-    "http://localhost:3001" || "http://10.100.151.132:3001"
+    "http://10.100.150.196:3001" || "http://10.100.151.132:3001"
   );
   let history = useNavigate();
   useEffect(() => {
@@ -88,9 +90,14 @@ const App = () => {
                 fontWeight: "700",
               }}
             >
-              Movies
+              Movies <span style={{textAlign:"right",position:"absolute",width:"32%"}}><Button onClick={()=>
+              {
+                localStorage.clear();
+                history("/user");
+
+              }}variant="contained">Sign Out</Button></span>
             </h1>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", justifyContent:"left"}}>
               <Input
                 type="text"
                 name=""
@@ -98,10 +105,12 @@ const App = () => {
                 placeholder="Please Enter"
                 onChange={throttling}
                 style={{
-                  marginLeft: "80px",
+                  marginLeft: "12%",
+                  marginRight: "10px"
+                  
                 }}
               />
-              <FormControl style={{ marginLeft: "10px", width: "200px" }}>
+              <FormControl style={{  width: "200px",marginRight:"10%" }}>
                 <InputLabel variant="standard" htmlFor="uncontrolled-native">
                   Filter
                 </InputLabel>
@@ -124,7 +133,7 @@ const App = () => {
               </FormControl>
             </div>
 
-            <div className="box">
+            <div className="box" style={{textAlign:"center"}}>
               {search.map((item, index) => {
                 return (
                   <>
@@ -132,8 +141,9 @@ const App = () => {
                       to={`/home/info/${index}`}
                       style={{
                         display: "inline-block",
-                        margin: "20px",
                         textDecoration: "none",
+                        marginRight:"40px",
+                        marginTop:"20px"
                       }}
                       key={index}
                     >
